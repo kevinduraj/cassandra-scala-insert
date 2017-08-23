@@ -1,6 +1,6 @@
 /**
- * Querying Cassandra from Scala
- */
+  * Querying Cassandra from Scala
+  */
 
 object App {
 
@@ -12,15 +12,14 @@ object App {
     if (args.size > 1) {
       println("args: " + args(0))
 
-      IP        = args(0).toString
-      filename  = args(1).toString
+      IP = args(0).toString
+      filename = args(1).toString
 
     }
 
     try {
       val cassandra = new ClassCassandra(IP)
       cassandra.flatFileInserts(filename)
-//      cassandra.csvFileInserts(filename)
       cassandra.disconnect("Method: getQueryResult")
     } catch {
       case e: Exception => println("exception caught: " + e);
