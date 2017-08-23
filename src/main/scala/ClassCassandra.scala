@@ -11,7 +11,7 @@ class ClassCassandra(IP: String) {
     clusterBuilder.withPort(9042)
     // clusterBuilder.withCredentials("admin", "password") // optional
     val cluster = clusterBuilder.build()
-    val session = cluster.connect("cloud1")
+    val session = cluster.connect("test")
     println(session.getCluster().getClusterName + " connection successful\n")
 
 /*----------------------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ class ClassCassandra(IP: String) {
                     var domain = col(0).replaceAll("\\p{C}", " ")
                     var url = col(1).replaceAll("\\p{C}", " ")
 
-                    val SQL = String.format("INSERT INTO cloud1.links (domain, url) VALUES('%s','%s');",  domain.replaceAll("'", "''"), url.replaceAll("'", "''")) 
+                    val SQL = String.format("INSERT INTO test.links (domain, url) VALUES('%s','%s');",  domain.replaceAll("'", "''"), url.replaceAll("'", "''")) 
                     if ((cnt % page) == 0) println(cnt + " " + SQL)     
                     session.execute(SQL)
                     cnt += 1
