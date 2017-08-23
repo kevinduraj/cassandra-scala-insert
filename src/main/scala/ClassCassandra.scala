@@ -47,7 +47,7 @@ class ClassCassandra(IP: String) {
           cnt += 1
 
         } else {
-          println("Column is too short")
+          println(s"Column is too short = $line")
         }
       }
     }

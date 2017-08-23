@@ -13,6 +13,6 @@ libraryDependencies ++= Seq(
 
 /*
  * References:
- * 
+ *
  * https://mvnrepository.com/artifact/com.datastax.cassandra/cassandra-driver-core
  */
