@@ -5,7 +5,7 @@ import scala.io.Codec
 
 class ClassCassandra(IP: String) {
 
-    val page = 5000
+    val page = 2 
     val clusterBuilder = Cluster.builder()
     clusterBuilder.addContactPoint(IP)
     clusterBuilder.withPort(9042)
@@ -19,25 +19,34 @@ class ClassCassandra(IP: String) {
   ----------------------------------------------------------------------------------------------------------*/
     def flatFileInserts(filename: String): Unit = {
 
+        println("def flatFileInserts(filename: String): Unit ")
+        println(s"filename = $filename")
+
         var cnt = 0
         //val buffer = io.Source.fromFile("/home/spider/raw/links.csv")
 
         for (line <- Source.fromFile(filename).getLines) { 
 
-            val col = line.split("\t").map(_.trim)
-            //println(s"${col(0)}|${col(1)}")
+            println(line)
+
+            val col = line.split("\\|").map(_.trim)
+            println(s"${col(0)}|${col(1)}")
           
             if(col.length == 2) {
 
-                if ((col(0).length() > 8) && (col(1).length() > 8)) {
+                if ((col(0).length() > 2) && (col(1).length() > 2)) {
 
-                    var domain = col(0).replaceAll("\\p{C}", " ")
-                    var url = col(1).replaceAll("\\p{C}", " ")
+                    val domain = col(0).replaceAll("\\p{C}", " ")
+                    val url = col(1).replaceAll("\\p{C}", " ")
 
-                    val SQL = String.format("INSERT INTO test.links (domain, url) VALUES('%s','%s');",  domain.replaceAll("'", "''"), url.replaceAll("'", "''")) 
-                    if ((cnt % page) == 0) println(cnt + " " + SQL)     
+                    val SQL = String.format("INSERT INTO test.links (domain, url) VALUES('%s','%s');",
+                              domain.replaceAll("'", "''"), url.replaceAll("'", "''"))
+                    //if ((cnt % page) == 0) println(cnt + " " + SQL)
+                    println(cnt + " " + SQL)
                     session.execute(SQL)
                     cnt += 1
+                } else {
+                  println("Column is too short")
                 }
             }                
         }
@@ -48,6 +57,8 @@ class ClassCassandra(IP: String) {
     Avoiding Nulls with Scala’s Option Class    
   ----------------------------------------------------------------------------------------------------------*/
     def csvFileInserts(filename: String): Unit = {
+
+        println("def csvFileInserts(filename: String): Unit ")
 
         implicit val codec = Codec("UTF-8")
         codec.onMalformedInput(CodingErrorAction.REPLACE)
@@ -69,8 +80,9 @@ class ClassCassandra(IP: String) {
                         var domain  = col(0).replaceAll("\"", "").replaceAll("\\p{C}", " ").replaceAll("'", "''")
                         var url     = col(1).replaceAll("\"", "").replaceAll("\\p{C}", " ").replaceAll("'", "''")
 
-                        val SQL = String.format("INSERT INTO cloud1.links (domain, url) VALUES('%s','%s');",  domain, url) 
-                        if ((cnt % page) == 0) println(cnt + " " + SQL)    
+                        val SQL = String.format("INSERT INTO test.links (domain, url) VALUES('%s','%s');",  domain, url) 
+                        //if ((cnt % page) == 0) println(cnt + " " + SQL)
+                        println(cnt + " " + SQL)
                         session.execute(SQL)
                         cnt += 1
                     }

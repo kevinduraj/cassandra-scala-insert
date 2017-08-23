@@ -19,8 +19,8 @@ object App {
 
     try {
       val cassandra = new ClassCassandra(IP)
-      //cassandra.flatFileInserts(filename)
-      cassandra.csvFileInserts(filename)
+      cassandra.flatFileInserts(filename)
+//      cassandra.csvFileInserts(filename)
       cassandra.disconnect("Method: getQueryResult")
     } catch {
       case e: Exception => println("exception caught: " + e);
