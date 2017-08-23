@@ -1,7 +1,5 @@
 import com.datastax.driver.core.Cluster
 import scala.io.Source
-import java.nio.charset.CodingErrorAction
-import scala.io.Codec
 
 class ClassCassandra(IP: String) {
 
