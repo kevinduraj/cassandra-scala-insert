@@ -6,8 +6,11 @@ scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq(
 
-  //https://mvnrepository.com/artifact/com.datastax.cassandra/cassandra-driver-core
   "com.datastax.cassandra" % "cassandra-driver-core" % "3.3.0"
 
 )
 
+
+/* References:
+ * https://mvnrepository.com/artifact/com.datastax.cassandra/cassandra-driver-core
+ */
